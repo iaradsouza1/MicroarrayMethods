@@ -1,1 +1,7 @@
-figure/*
+**/figure
+**.Rproj.user/
+*.Rdata
+*.Rbuildignore
+*.Rhistory
+*MicroarrayMethods.Rproj
+
