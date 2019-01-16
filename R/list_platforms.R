@@ -28,5 +28,3 @@ list_platforms <- function(dataset, db = "main")  {
   }
 }
 
-list_platforms("hsapiens_gene_ensembl")
-
