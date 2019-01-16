@@ -1,0 +1,10 @@
+set_fdata <- function(eset, fdata) {
+  
+  
+}
+
+eset2 <- set_fdata(eset2, annot_biomart, probe_col = "affy_hg_u133_plus_2", ref_col = "hgnc_symbol", rm_probes = TRUE)
+eset1 <- set_fdata(eset, annot_biomart, probe_col = "affy_hg_u133_plus_2")
+
+teste <- remove_probes(annot_biomart, probe_col = "affy_hg_u133_plus_2")
+get_annotation()

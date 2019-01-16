@@ -1,0 +1,24 @@
+
+probe_col <- "affy_hg_u133_plus_2"
+ref_col <- "hgnc_symbol"
+fdata <- annot_biomart
+
+id1 <- dplyr::sym(probe_col)
+id2 <- dplyr::sym(ref_col)
+rem_probes <- fdata %>%
+  dplyr::group_by((!!id1)) %>%
+  dplyr::summarise(c = dplyr::n_distinct((!!id2))) %>%
+  dplyr::filter(c > 1) %>%
+  dplyr::select((!!id1)) %>%
+  unlist(use.names = F)
+
+probes_in <- fdata[,probe_col] %in% rem_probes
+fdata <- fdata[!probes_in,]
+
+fdata <- fdata %>% 
+  filter(!duplicated((!!id1)))
+
+dup <- sum(duplicated((!!id1)))
+
+prop <- round(sum(probes_in) / length(unique(fdata[,probe_col])) * 100, digits = 2)
+message(prop, "% of probes mapping to different ", ref_col, " were removed. Also,", dup, "duplicated probes in fdata were removed.")

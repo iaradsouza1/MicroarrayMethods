@@ -1,0 +1,22 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1547662074027.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "0",
+    "id" : "E84A101F",
+    "lastKnownWriteTime" : 1538678947,
+    "last_content_update" : 1538678947,
+    "path" : "~/Área de Trabalho/exp1/exp_diff.R",
+    "project_path" : null,
+    "properties" : {
+        "cursorPosition" : "4,43",
+        "scrollLine" : "0"
+    },
+    "relative_order" : 9,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}

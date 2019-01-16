@@ -1,0 +1,12 @@
+
+# Differential expression analysis ----------------------------------------
+
+# Get probes annotation
+feature_data <- get_annotation(dataset = "hsapiens_gene_ensembl", platform = "affy_hg_u133_plus_2")
+
+# Set annotation in to eset and remove promiscuous probes and dual notations
+eset <- set_fdata(eset, feature_data,
+                  probe_col = "affy_hg_u133_plus_2",
+                  ref_col = "hgnc_symbol",
+                  rm_probes = TRUE)
+
