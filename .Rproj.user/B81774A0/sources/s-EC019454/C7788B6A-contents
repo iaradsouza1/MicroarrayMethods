@@ -34,7 +34,7 @@ eset <- set_fdata(eset, feature_data,
                   ref_col = ref_col,
                   rm_probes = TRUE)
 
-# 
+#
 
 temp <- as.factor(pData(eset)[,group])
 design <- model.matrix(~0 + temp)

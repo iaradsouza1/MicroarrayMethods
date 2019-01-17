@@ -12,7 +12,7 @@ set_fdata(eset, fdata, probe_col, rm_probes = FALSE,
 
 \item{fdata}{Feature data (dataframe) containing at least two columns: probe id and other id (gene symbol, for instance).}
 
-\item{probe_col}{Column name for probes in}
+\item{probe_col}{Column name for probes in \code{fdata}}
 
 \item{rm_probes}{Logical. Whether toremove promiscuous probes form feature data dataframe.}
 

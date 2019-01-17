@@ -5,7 +5,7 @@
 #'
 #' @param eset ExpressionSet object. Usually the result of normalization process
 #' @param fdata Feature data (dataframe) containing at least two columns: probe id and other id (gene symbol, for instance).
-#' @param probe_col Column name for probes in
+#' @param probe_col Column name for probes in \code{fdata}
 #' @param rm_probes Logical. Whether toremove promiscuous probes form feature data dataframe.
 #' @param ref_col Column name of feature data with the reference id to look for promiscuous probes.
 #'
