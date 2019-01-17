@@ -12,6 +12,8 @@ report_output <- "~/Área de Trabalho/QC12312.html"
 dataset <- "hsapiens_gene_ensembl"
 platform <- "affy_hg_u133_plus_2"
 ref_col <- "hgnc_symbol"
+contrasts <- c(s8xs0 = "shOTX2_8-shOTX2_0", s16xs8 = "shOTX2_16-shOTX2_8", s24xs16 = "shOTX2_24-shOTX2_16",
+               s48xs24 = "shOTX2_48-shOTX2_24", s96xs48 = "shOTX2_96-shOTX2_48")
 
 feature_data[,platform] <- NULL
 # Quality control report
@@ -34,19 +36,6 @@ eset <- set_fdata(eset, feature_data,
                   ref_col = ref_col,
                   rm_probes = TRUE)
 
-#
-
-temp <- as.factor(pData(eset)[,group])
-design <- model.matrix(~0 + temp)
-cols <- colnames(design)
-colnames(design) <- gsub("temp", "", cols)
-a <- c(s8xs0 = "shOTX2_8-shOTX2_0", s16xs8 = "shOTX2_16-shOTX2_8", s24xs16 = "shOTX2_24-shOTX2_16",
-          s48xs24 = "shOTX2_48-shOTX2_24", s96xs48 = "shOTX2_96-shOTX2_48")
-fit <- limma::lmFit(eset, design)
-contrasts <- limma::makeContrasts(a, levels = design)
-ct.fit <- limma::eBayes(limma::contrasts.fit(fit, contrasts))
-res.fit <- limma::decideTests(ct.fit, method = "separate", adjust.method = "BH", p.value = 0.05)
-limma::topTable(ct.fit, adjust.method = "BH", p.value = 0.05)
-
-
+# Differential expression
+delimma <- diff_exp(eset, contrasts, method = "global", adjust.method = "BH", p.value = 0.001, degenes_only = T)
 

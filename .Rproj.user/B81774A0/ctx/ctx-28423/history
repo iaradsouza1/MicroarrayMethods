@@ -1,0 +1,512 @@
+#' @param ref_col Column name of feature data with the reference id to look for promiscuous probes.
+#'
+#' @return ExpressionSet object with filtered assayData slot.
+#' @export
+#'
+#' @examples
+set_fdata <- function(eset, fdata, probe_col, rm_probes = FALSE, ref_col = "hgnc_symbol") {
+fdata <- unique(na.omit(fdata))
+rownames(fdata) <- fdata[, probe_col]
+fdata[,probe_col] <- NULL
+id1 <- dplyr::sym(probe_col)
+id2 <- dplyr::sym(ref_col)
+if(rm_probes) {
+if(is.null(ref_col)) {
+stop("Provide a reference column in order to remove probes that map to more than one id.")
+}
+# Remove promiscuous probes
+rem_probes <- fdata %>%
+dplyr::group_by((!!id1)) %>%
+dplyr::summarise(c = dplyr::n_distinct((!!id2))) %>%
+dplyr::ungroup() %>%
+dplyr::filter(c > 1) %>%
+dplyr::select((!!id1)) %>%
+unlist(use.names = F)
+# Subset fdata by probes that are not promiscuous
+probes_in <- rownames(fdata) %in% rem_probes
+fdata <- fdata[!probes_in,]
+print("OI")
+# Filter fdata containing not-duplicated values
+dup <- sum(duplicated(fdata[,probe_col]))
+fdata <- fdata %>%
+dplyr::filter(!duplicated((!!id1)))
+# # Set probes as rownames
+# rownames(fdata) <- fdata[,probe_col]
+# Calculate proportion of promiscuous probes removed from feature data
+prop <- round(sum(probes_in) / length(unique(fdata[,probe_col])) * 100, digits = 2)
+# Filter assayData by feature data and assign fData
+eset <- eset[rownames(eset) %in% rownames(fdata), ]
+eset <- eset[match(rownames(fdata), rownames(eset)), ]
+Biobase::fData(eset) <- fdata
+message(prop, "% of probes mapping to different ", ref_col, " were removed. Also, ", dup, " duplicated probes in feature data were removed.")
+return(eset)
+} else {
+# Filter fdata containing not-duplicated values
+dup <- sum(duplicated(fdata[,probe_col]))
+fdata <- fdata %>%
+dplyr::filter(!duplicated((!!id1)))
+# Set probes as rownames
+rownames(fdata) <- fdata[,probe_col]
+fdata[,probe_col] <- NULL
+# Filter assayData by feature data and assign fData
+eset <- eset[rownames(eset) %in% rownames(fdata), ]
+eset <- eset[match(rownames(fdata), rownames(eset)), ]
+Biobase::fData(eset) <- fdata
+message(dup, " duplicated probes in feature data were removed.")
+return(eset)
+}
+}
+# Set annotation in to eset and remove promiscuous probes and dual notations
+eset <- set_fdata(eset, feature_data,
+probe_col = platform,
+ref_col = ref_col,
+rm_probes = TRUE)
+#' @param eset ExpressionSet object. Usually the result of normalization process
+#' @param fdata Feature data (dataframe) containing at least two columns: probe id and other id (gene symbol, for instance).
+#' @param probe_col Column name for probes in
+#' @param rm_probes Logical. Whether toremove promiscuous probes form feature data dataframe.
+#' @param ref_col Column name of feature data with the reference id to look for promiscuous probes.
+#'
+#' @return ExpressionSet object with filtered assayData slot.
+#' @export
+#'
+#' @examples
+set_fdata <- function(eset, fdata, probe_col, rm_probes = FALSE, ref_col = "hgnc_symbol") {
+fdata <- unique(na.omit(fdata))
+id1 <- dplyr::sym(probe_col)
+id2 <- dplyr::sym(ref_col)
+if(rm_probes) {
+if(is.null(ref_col)) {
+stop("Provide a reference column in order to remove probes that map to more than one id.")
+}
+# Remove promiscuous probes
+rem_probes <- fdata %>%
+dplyr::group_by((!!id1)) %>%
+dplyr::summarise(c = dplyr::n_distinct((!!id2))) %>%
+dplyr::ungroup() %>%
+dplyr::filter(c > 1) %>%
+dplyr::select((!!id1)) %>%
+unlist(use.names = F)
+# Subset fdata by probes that are not promiscuous
+probes_in <- fdata[,probe_col] %in% rem_probes
+fdata <- fdata[!probes_in,]
+# Filter fdata containing not-duplicated values
+dup <- sum(duplicated(fdata[,probe_col]))
+fdata <- fdata %>%
+dplyr::filter(!duplicated((!!id1)))
+# Set probes as rownames
+rownames(fdata) <- fdata[,probe_col]
+fdata <- fdata[,-probe_col]
+# Calculate proportion of promiscuous probes removed from feature data
+prop <- round(sum(probes_in) / length(unique(fdata[,probe_col])) * 100, digits = 2)
+# Filter assayData by feature data and assign fData
+eset <- eset[rownames(eset) %in% rownames(fdata), ]
+eset <- eset[base::match(rownames(fdata), rownames(eset)), ]
+Biobase::fData(eset) <- fdata
+message(prop, "% of probes mapping to different ", ref_col, " were removed. Also, ", dup, " duplicated probes in feature data were removed.")
+return(eset)
+} else {
+# Filter fdata containing not-duplicated values
+dup <- sum(duplicated(fdata[,probe_col]))
+fdata <- fdata %>%
+dplyr::filter(!duplicated((!!id1)))
+# Set probes as rownames
+rownames(fdata) <- fdata[,probe_col]
+fdata[,probe_col] <- NULL
+# Filter assayData by feature data and assign fData
+eset <- eset[rownames(eset) %in% rownames(fdata), ]
+eset <- eset[base::match(rownames(fdata), rownames(eset)), ]
+Biobase::fData(eset) <- fdata
+message(dup, " duplicated probes in feature data were removed.")
+return(eset)
+}
+}
+# Set annotation in to eset and remove promiscuous probes and dual notations
+eset <- set_fdata(eset, feature_data,
+probe_col = platform,
+ref_col = ref_col,
+rm_probes = TRUE)
+colnames(feature_data)
+platform
+#' @param eset ExpressionSet object. Usually the result of normalization process
+#' @param fdata Feature data (dataframe) containing at least two columns: probe id and other id (gene symbol, for instance).
+#' @param probe_col Column name for probes in
+#' @param rm_probes Logical. Whether toremove promiscuous probes form feature data dataframe.
+#' @param ref_col Column name of feature data with the reference id to look for promiscuous probes.
+#'
+#' @return ExpressionSet object with filtered assayData slot.
+#' @export
+#'
+#' @examples
+set_fdata <- function(eset, fdata, probe_col, rm_probes = FALSE, ref_col = "hgnc_symbol") {
+fdata <- unique(na.omit(fdata))
+id1 <- dplyr::sym(probe_col)
+id2 <- dplyr::sym(ref_col)
+if(rm_probes) {
+if(is.null(ref_col)) {
+stop("Provide a reference column in order to remove probes that map to more than one id.")
+}
+# Remove promiscuous probes
+rem_probes <- fdata %>%
+dplyr::group_by((!!id1)) %>%
+dplyr::summarise(c = dplyr::n_distinct((!!id2))) %>%
+dplyr::ungroup() %>%
+dplyr::filter(c > 1) %>%
+dplyr::select((!!id1)) %>%
+unlist(use.names = F)
+# Subset fdata by probes that are not promiscuous
+probes_in <- fdata[,probe_col] %in% rem_probes
+fdata <- fdata[!probes_in,]
+# Filter fdata containing not-duplicated values
+dup <- sum(duplicated(fdata[,probe_col]))
+fdata <- fdata %>%
+dplyr::filter(!duplicated((!!id1)))
+# Set probes as rownames
+rownames(fdata) <- fdata[,probe_col]
+fdata <- fdata[, !(colnames(fdata) %in% probe_col)]
+# Calculate proportion of promiscuous probes removed from feature data
+prop <- round(sum(probes_in) / length(unique(fdata[,probe_col])) * 100, digits = 2)
+# Filter assayData by feature data and assign fData
+eset <- eset[rownames(eset) %in% rownames(fdata), ]
+eset <- eset[base::match(rownames(fdata), rownames(eset)), ]
+Biobase::fData(eset) <- fdata
+message(prop, "% of probes mapping to different ", ref_col, " were removed. Also, ", dup, " duplicated probes in feature data were removed.")
+return(eset)
+} else {
+# Filter fdata containing not-duplicated values
+dup <- sum(duplicated(fdata[,probe_col]))
+fdata <- fdata %>%
+dplyr::filter(!duplicated((!!id1)))
+# Set probes as rownames
+rownames(fdata) <- fdata[,probe_col]
+fdata[,probe_col] <- NULL
+# Filter assayData by feature data and assign fData
+eset <- eset[rownames(eset) %in% rownames(fdata), ]
+eset <- eset[base::match(rownames(fdata), rownames(eset)), ]
+Biobase::fData(eset) <- fdata
+message(dup, " duplicated probes in feature data were removed.")
+return(eset)
+}
+}
+# Set annotation in to eset and remove promiscuous probes and dual notations
+eset <- set_fdata(eset, feature_data,
+probe_col = platform,
+ref_col = ref_col,
+rm_probes = TRUE)
+print("oi")
+#' @param eset ExpressionSet object. Usually the result of normalization process
+#' @param fdata Feature data (dataframe) containing at least two columns: probe id and other id (gene symbol, for instance).
+#' @param probe_col Column name for probes in
+#' @param rm_probes Logical. Whether toremove promiscuous probes form feature data dataframe.
+#' @param ref_col Column name of feature data with the reference id to look for promiscuous probes.
+#'
+#' @return ExpressionSet object with filtered assayData slot.
+#' @export
+#'
+#' @examples
+set_fdata <- function(eset, fdata, probe_col, rm_probes = FALSE, ref_col = "hgnc_symbol") {
+fdata <- unique(na.omit(fdata))
+id1 <- dplyr::sym(probe_col)
+id2 <- dplyr::sym(ref_col)
+if(rm_probes) {
+if(is.null(ref_col)) {
+stop("Provide a reference column in order to remove probes that map to more than one id.")
+}
+# Remove promiscuous probes
+rem_probes <- fdata %>%
+dplyr::group_by((!!id1)) %>%
+dplyr::summarise(c = dplyr::n_distinct((!!id2))) %>%
+dplyr::ungroup() %>%
+dplyr::filter(c > 1) %>%
+dplyr::select((!!id1)) %>%
+unlist(use.names = F)
+# Subset fdata by probes that are not promiscuous
+probes_in <- fdata[,probe_col] %in% rem_probes
+fdata <- fdata[!probes_in,]
+# Filter fdata containing not-duplicated values
+dup <- sum(duplicated(fdata[,probe_col]))
+fdata <- fdata %>%
+dplyr::filter(!duplicated((!!id1)))
+# Set probes as rownames
+rownames(fdata) <- fdata[,probe_col]
+fdata <- fdata[, !(colnames(fdata) %in% probe_col)]
+print("oi")
+# Calculate proportion of promiscuous probes removed from feature data
+prop <- round(sum(probes_in) / length(unique(fdata[,probe_col])) * 100, digits = 2)
+# Filter assayData by feature data and assign fData
+eset <- eset[rownames(eset) %in% rownames(fdata), ]
+eset <- eset[base::match(rownames(fdata), rownames(eset)), ]
+Biobase::fData(eset) <- fdata
+message(prop, "% of probes mapping to different ", ref_col, " were removed. Also, ", dup, " duplicated probes in feature data were removed.")
+return(eset)
+} else {
+# Filter fdata containing not-duplicated values
+dup <- sum(duplicated(fdata[,probe_col]))
+fdata <- fdata %>%
+dplyr::filter(!duplicated((!!id1)))
+# Set probes as rownames
+rownames(fdata) <- fdata[,probe_col]
+fdata[,probe_col] <- NULL
+# Filter assayData by feature data and assign fData
+eset <- eset[rownames(eset) %in% rownames(fdata), ]
+eset <- eset[base::match(rownames(fdata), rownames(eset)), ]
+Biobase::fData(eset) <- fdata
+message(dup, " duplicated probes in feature data were removed.")
+return(eset)
+}
+}
+# Set annotation in to eset and remove promiscuous probes and dual notations
+eset <- set_fdata(eset, feature_data,
+probe_col = platform,
+ref_col = ref_col,
+rm_probes = TRUE)
+#' @param eset ExpressionSet object. Usually the result of normalization process
+#' @param fdata Feature data (dataframe) containing at least two columns: probe id and other id (gene symbol, for instance).
+#' @param probe_col Column name for probes in
+#' @param rm_probes Logical. Whether toremove promiscuous probes form feature data dataframe.
+#' @param ref_col Column name of feature data with the reference id to look for promiscuous probes.
+#'
+#' @return ExpressionSet object with filtered assayData slot.
+#' @export
+#'
+#' @examples
+set_fdata <- function(eset, fdata, probe_col, rm_probes = FALSE, ref_col = "hgnc_symbol") {
+fdata <- unique(na.omit(fdata))
+id1 <- dplyr::sym(probe_col)
+id2 <- dplyr::sym(ref_col)
+if(rm_probes) {
+if(is.null(ref_col)) {
+stop("Provide a reference column in order to remove probes that map to more than one id.")
+}
+# Remove promiscuous probes
+rem_probes <- fdata %>%
+dplyr::group_by((!!id1)) %>%
+dplyr::summarise(c = dplyr::n_distinct((!!id2))) %>%
+dplyr::ungroup() %>%
+dplyr::filter(c > 1) %>%
+dplyr::select((!!id1)) %>%
+unlist(use.names = F)
+# Subset fdata by probes that are not promiscuous
+probes_in <- fdata[,probe_col] %in% rem_probes
+fdata <- fdata[!probes_in,]
+# Filter fdata containing not-duplicated values
+dup <- sum(duplicated(fdata[,probe_col]))
+fdata <- fdata %>%
+dplyr::filter(!duplicated((!!id1)))
+# Set probes as rownames
+rownames(fdata) <- fdata[,probe_col]
+fdata <- fdata[, !(colnames(fdata) %in% probe_col)]
+# Calculate proportion of promiscuous probes removed from feature data
+prop <- round(sum(probes_in) / length(unique(rownames(fdata))) * 100, digits = 2)
+# Filter assayData by feature data and assign fData
+eset <- eset[rownames(eset) %in% rownames(fdata), ]
+eset <- eset[base::match(rownames(fdata), rownames(eset)), ]
+Biobase::fData(eset) <- fdata
+message(prop, "% of probes mapping to different ", ref_col, " were removed. Also, ", dup, " duplicated probes in feature data were removed.")
+return(eset)
+} else {
+# Filter fdata containing not-duplicated values
+dup <- sum(duplicated(fdata[,probe_col]))
+fdata <- fdata %>%
+dplyr::filter(!duplicated((!!id1)))
+# Set probes as rownames
+rownames(fdata) <- fdata[,probe_col]
+fdata <- fdata[, !(colnames(fdata) %in% probe_col)]
+# Filter assayData by feature data and assign fData
+eset <- eset[rownames(eset) %in% rownames(fdata), ]
+eset <- eset[base::match(rownames(fdata), rownames(eset)), ]
+Biobase::fData(eset) <- fdata
+message(dup, " duplicated probes in feature data were removed.")
+return(eset)
+}
+}
+# Set annotation in to eset and remove promiscuous probes and dual notations
+eset <- set_fdata(eset, feature_data,
+probe_col = platform,
+ref_col = ref_col,
+rm_probes = TRUE)
+head(exprs(eset))
+head(rownames(exprs(eset)))
+head(rownames(fData(eset)))
+# Import and normalize
+eset <- import_norm(celfiles_path = celfiles_path, pheno_data = pheno_data, sep = sep)
+View(exprs(eset))
+exprs(eset)["211600_at",]
+# Set annotation in to eset and remove promiscuous probes and dual notations
+eset <- set_fdata(eset, feature_data,
+probe_col = platform,
+ref_col = ref_col,
+rm_probes = TRUE)
+limma::topTable(ct.fit, adjust.method = "BH", p.value = 0.05)
+temp <- as.factor(pData(eset)[,group])
+design <- model.matrix(~0 + temp)
+cols <- colnames(design)
+colnames(design) <- gsub("temp", "", cols)
+a <- c(s8xs0 = "shOTX2_8-shOTX2_0", s16xs8 = "shOTX2_16-shOTX2_8", s24xs16 = "shOTX2_24-shOTX2_16",
+s48xs24 = "shOTX2_48-shOTX2_24", s96xs48 = "shOTX2_96-shOTX2_48")
+fit <- limma::lmFit(eset, design)
+contrasts <- limma::makeContrasts(a, levels = design)
+ct.fit <- limma::eBayes(limma::contrasts.fit(fit, contrasts))
+res.fit <- limma::decideTests(ct.fit, method = "separate", adjust.method = "BH", p.value = 0.05)
+limma::topTable(ct.fit, adjust.method = "BH", p.value = 0.05)
+View(feature_data)
+devtools::document()
+SH.limma <- data.frame( entrez= ct.fit$genes$entrez, symbol = ct.fit$genes$symbol,
+logFC = ct.fit$coef, p.value = ct.fit$p.value,
+degenes = unclass(res.fit), stringsAsFactors = FALSE)
+SH.limma <- data.frame( entrez= ct.fit$genes$entrezgene, symbol = ct.fit$genes$hgnc_symbol,
+logFC = ct.fit$coef, p.value = ct.fit$p.value,
+degenes = unclass(res.fit), stringsAsFactors = FALSE)
+View(SH.limma)
+res.fit <- limma::decideTests(ct.fit, method = "separate", adjust.method = "BH", p.value = 0.05)
+unclass(res.fit)
+a <- c(s8xs0 = "shOTX2_8-shOTX2_0", s16xs8 = "shOTX2_16-shOTX2_8", s24xs16 = "shOTX2_24-shOTX2_16",
+s48xs24 = "shOTX2_48-shOTX2_24", s96xs48 = "shOTX2_96-shOTX2_48")
+fit <- limma::lmFit(eset, design)
+contrasts <- limma::makeContrasts(a, levels = design)
+ct.fit <- limma::eBayes(limma::contrasts.fit(fit, contrasts))
+res.fit <- limma::decideTests(ct.fit, method = "separate", adjust.method = "BH", p.value = 0.05)
+contrasts <- limma::makeContrasts(contrasts = a, levels = design)
+ct.fit <- limma::eBayes(limma::contrasts.fit(fit, contrasts))
+res.fit <- limma::decideTests(ct.fit, method = "separate", adjust.method = "BH", p.value = 0.05)
+SH.limma <- data.frame( entrez= ct.fit$genes$entrezgene, symbol = ct.fit$genes$hgnc_symbol,
+logFC = ct.fit$coef, p.value = ct.fit$p.value,
+degenes = unclass(res.fit), stringsAsFactors = FALSE)
+View(SH.limma)
+View(SH.limma)
+ct.fit$genes
+SH.limma <- data.frame(logFC = ct.fit$coef, p.value = ct.fit$p.value, ct.fit$genes,
+degenes = unclass(res.fit), stringsAsFactors = FALSE)
+View(SH.limma)
+SH.limma <- data.frame(ct.fit$genes, logFC = ct.fit$coef, p.value = ct.fit$p.value,
+degenes = unclass(res.fit), stringsAsFactors = FALSE)
+View(SH.limma)
+View(feature_data)
+names(b)
+diff_exp <- function(eset, contrasts, method, adjust.method, p.value = 0.05, degenes_only=FALSE, ...) {
+temp <- as.factor(pData(eset)[, group])
+design <- model.matrix(~0 + temp)
+cols <- colnames(design)
+colnames(design) <- gsub("temp", "", cols)
+fit <- limma::lmFit(eset, design)
+contrasts <- limma::makeContrasts(contrasts = contrasts, levels = design)
+ct.fit <- limma::eBayes(limma::contrasts.fit(fit, contrasts))
+res.fit <- limma::decideTests(ct.fit, method = method, adjust.method = adjust.method, p.value = p.value)
+sh.limma <- data.frame(ct.fit$genes, logFC = ct.fit$coef, p.value = ct.fit$p.value,
+degenes = unclass(res.fit), stringsAsFactors = FALSE)
+if(degenes_only) {
+features <- rowSums(res.fit! = 0) > 0
+features <- names(features)[features]
+de.limma <- sh.limma[features, ]
+de.limma <- de.limma[complete.cases(de.limma), ]
+}
+}
+diff_exp <- function(eset, contrasts, method, adjust.method, p.value = 0.05, degenes_only=FALSE, ...) {
+temp <- as.factor(pData(eset)[, group])
+design <- model.matrix(~0 + temp)
+cols <- colnames(design)
+colnames(design) <- gsub("temp", "", cols)
+fit <- limma::lmFit(eset, design)
+contrasts <- limma::makeContrasts(contrasts = contrasts, levels = design)
+ct.fit <- limma::eBayes(limma::contrasts.fit(fit, contrasts))
+res.fit <- limma::decideTests(ct.fit, method = method, adjust.method = adjust.method, p.value = p.value)
+sh.limma <- data.frame(ct.fit$genes, logFC = ct.fit$coef, p.value = ct.fit$p.value,
+degenes = unclass(res.fit), stringsAsFactors = FALSE)
+if (degenes_only) {
+features <- rowSums(res.fit != 0) > 0
+features <- names(features)[features]
+de.limma <- sh.limma[features, ]
+de.limma <- de.limma[complete.cases(de.limma), ]
+}
+}
+diff_exp(eset, a, method = "global", adjust.method = "BH")
+diff_exp <- function(eset, contrasts, method, adjust.method, p.value = 0.05, degenes_only=FALSE, ...) {
+temp <- as.factor(pData(eset)[, group])
+design <- model.matrix(~0 + temp)
+cols <- colnames(design)
+colnames(design) <- gsub("temp", "", cols)
+fit <- limma::lmFit(eset, design)
+contrasts <- limma::makeContrasts(contrasts = contrasts, levels = design)
+ct.fit <- limma::eBayes(limma::contrasts.fit(fit, contrasts))
+res.fit <- limma::decideTests(ct.fit, method = method, adjust.method = adjust.method, p.value = p.value)
+sh.limma <- data.frame(ct.fit$genes, logFC = ct.fit$coef, p.value = ct.fit$p.value,
+degenes = unclass(res.fit), stringsAsFactors = FALSE)
+if (degenes_only) {
+features <- rowSums(res.fit != 0) > 0
+features <- names(features)[features]
+de.limma <- sh.limma[features, ]
+de.limma <- de.limma[complete.cases(de.limma), ]
+return(de.limma)
+} else {
+return(sh.limma)
+}
+}
+shlimma <- diff_exp(eset, a, method = "global", adjust.method = "BH")
+View(shlimma)
+shlimma <- diff_exp(eset, a, method = "global", adjust.method = "BH", degenes_only = T)
+View(shlimma)
+diff_exp <- function(eset, contrasts, method, adjust.method, p.value = 0.05, degenes_only = FALSE, ...) {
+temp <- as.factor(pData(eset)[, group])
+design <- model.matrix(~0 + temp)
+cols <- colnames(design)
+colnames(design) <- gsub("temp", "", cols)
+fit <- limma::lmFit(eset, design)
+contrasts <- limma::makeContrasts(contrasts = contrasts, levels = design)
+ct.fit <- limma::eBayes(limma::contrasts.fit(fit, contrasts))
+res.fit <- limma::decideTests(ct.fit, method = method, adjust.method = adjust.method, p.value = p.value)
+sh.limma <- data.frame(ct.fit$genes, logFC = ct.fit$coef, p.value = ct.fit$p.value,
+degenes = unclass(res.fit), stringsAsFactors = FALSE)
+if (degenes_only) {
+features <- rowSums(res.fit != 0) > 0
+features <- names(features)[features]
+de.limma <- sh.limma[features, ]
+de.limma <- de.limma[complete.cases(de.limma), ]
+return(de.limma)
+} else {
+return(sh.limma)
+}
+}
+diff_exp <- function(eset, contrasts, method, adjust.method, p.value = 0.05, degenes_only = FALSE, ...) {
+temp <- as.factor(pData(eset)[, group])
+design <- model.matrix(~0 + temp)
+cols <- colnames(design)
+colnames(design) <- gsub("temp", "", cols)
+fit <- limma::lmFit(eset, design)
+contrasts <- limma::makeContrasts(contrasts = contrasts, levels = design)
+ct.fit <- limma::eBayes(limma::contrasts.fit(fit, contrasts))
+res.fit <- limma::decideTests(ct.fit, method = method, adjust.method = adjust.method, p.value = p.value)
+sh.limma <- data.frame(ct.fit$genes, logFC = ct.fit$coef, p.value = ct.fit$p.value,
+degenes = unclass(res.fit), stringsAsFactors = FALSE)
+if (degenes_only) {
+features <- rowSums(res.fit != 0) > 0
+features <- names(features)[features]
+de.limma <- sh.limma[features, ]
+de.limma <- de.limma[complete.cases(de.limma), ]
+return(de.limma)
+} else {
+return(sh.limma)
+}
+}
+library(MicroarrayMethods)
+a
+contrasts <- c(s8xs0 = "shOTX2_8-shOTX2_0", s16xs8 = "shOTX2_16-shOTX2_8", s24xs16 = "shOTX2_24-shOTX2_16",
+s48xs24 = "shOTX2_48-shOTX2_24", s96xs48 = "shOTX2_96-shOTX2_48")
+# Differential expression
+delimma <- diff_exp(eset, contrasts, method = "global", adjust.method = "BH", degenes_only = T)
+View(delimma)
+# Differential expression
+delimma <- diff_exp(eset, contrasts, method = "global", adjust.method = "BH", p.value = 0.001, degenes_only = T)
+View(delimma)
+# Set annotation in to eset and remove promiscuous probes and dual notations
+eset <- set_fdata(eset, feature_data,
+probe_col = platform,
+ref_col = ref_col,
+rm_probes = TRUE)
+# Differential expression
+delimma <- diff_exp(eset, contrasts, method = "global", adjust.method = "BH", p.value = 0.001, degenes_only = T)
+# Differential expression
+delimma <- diff_exp(eset, contrasts, method = "global", adjust.method = "BH", p.value = 0.01, degenes_only = T)
+# Differential expression
+delimma <- diff_exp(eset, contrasts, method = "global", adjust.method = "BH", p.value = 0.05, degenes_only = T)
+# Differential expression
+delimma <- diff_exp(eset, contrasts, method = "global", adjust.method = "BH", p.value = 0.001, degenes_only = T)
