@@ -29,7 +29,7 @@ get_annotation <- function(dataset, platform="none", db = "main", att ) {
   if (db == "main") {
     ensembl <- biomaRt::useDataset(dataset = dataset, mart = biomaRt::useMart("ENSEMBL_MART_ENSEMBL"))
     #att <- c(platform, att) #replaced by line 27
-    id <- getBM(attributes = att, mart = ensembl)
+    id <- biomaRt::getBM(attributes = att, mart = ensembl) #faltou biomaRt::
 
     id[id == ""] <- NA
     id <- unique(na.omit(id))
