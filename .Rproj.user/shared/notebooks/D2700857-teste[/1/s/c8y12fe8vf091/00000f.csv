@@ -1,0 +1,5 @@
+"0","par(mfrow = c(2, 2))"
+"0","oligo::MAplot(eset, plot.method = ""smoothScatter"", main = """")"
+"2","Error in oligo::MAplot(eset, plot.method = ""smoothScatter"", main = """") : 
+  objeto 'eset' não encontrado
+"

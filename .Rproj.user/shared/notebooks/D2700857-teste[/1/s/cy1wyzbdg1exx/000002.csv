@@ -1,0 +1,4 @@
+"0","celfiles <- ""~/Área de Trabalho/Cassia_3/Analise_2/GSE5617_RAW/"""
+"0","raw <- ReadAffy(celfile.path = celfiles)"
+"0","pheno_data <- read.table(file = paste0(celfiles, ""samples.txt""), sep = ""\t"" ,"
+"0","                         header = F)"
