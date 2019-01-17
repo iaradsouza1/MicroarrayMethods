@@ -12,15 +12,15 @@ plot_pca(eset, components, groups, type = NULL, batch = NULL,
 
 \item{components}{A vector of length 2 containing which principal components to plot}
 
-\item{groups}{Column name corresponding to the groups of samples annotation on pheno data provided to the `import_celfiles` function}
+\item{groups}{Column name corresponding to the groups of samples annotation on pheno data provided to the \code{import_celfiles()} function}
 
-\item{type}{Column name corresponding to the types of samples (control and treated samples) on pheno data provided to the `import_celfiles` function (optional)}
+\item{type}{Column name corresponding to the types of samples (control and treated samples) on pheno data provided to the \code{import_celfiles()} function (optional)}
 
-\item{batch}{Column name corresponding to each replicates on pheno data provided to the `import_celfiles` function (optional)}
+\item{batch}{Column name corresponding to each replicates on pheno data provided to the \code{import_celfiles()} function (optional)}
 
 \item{filename}{File name to save plot (pdf format)}
 
-\item{...}{Other arguments to be passed to pdf() function}
+\item{...}{Other arguments to be passed to \code{pdf()} function}
 }
 \value{
 Plot of chosen PCs

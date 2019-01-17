@@ -4,7 +4,7 @@
 \alias{plot_hk}
 \title{Plot housekeeping expression levels}
 \usage{
-plot_hk(eset, id, actin, gapdh)
+plot_hk(eset, id, actin, gapdh, filename = NULL, ...)
 }
 \arguments{
 \item{eset}{An ExpressionSet object}

@@ -21,9 +21,9 @@ and "mouse" for ENSEMBL_MART_MOUSE database (which provides specific information
 Dataframe containing the attributes requested.
 }
 \description{
-Get annotation a specific platform
+Get annotation for a specific platform
 }
 \details{
-The \code{att} argument expects a vector containing the atributes according to biomart package. One can
+The \code{att} argument expects a vector containing the attributes according to biomart package. One can
 retrieve all available attributes with list_all_attributes() function.
 }

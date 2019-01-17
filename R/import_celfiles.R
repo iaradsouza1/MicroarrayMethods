@@ -2,10 +2,10 @@
 #'
 #' @param celfiles_path Path to the celfiles directory
 #' @param pheno_data File name with metadata information from the experiment
-#' @param sep `pheno_data` separated format
-#' @param filenames a vector containg the names of .CEL files, if only a subset of files are needed to be imported
+#' @param sep \code{pheno_data} separated format
+#' @param filenames a vector containg the names of .CEL files, if only a subset of files are needed to be imported. (optional)
 #'
-#' @details `pheno_data` is a table containing basic information about the experiment, such as GSMid and sample groups.
+#' @details \code{pheno_data} is a table containing basic information about the experiment, such as GSMid and sample groups.
 #' It must have at least these two columns (GSMid and sample groups). For PCA plot, one could provide the type of each samples (control or treated)
 #' and the batches (replicates) of each sample.
 #'
