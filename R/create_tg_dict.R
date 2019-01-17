@@ -27,6 +27,7 @@ create_tg_dict <- function(ensembleGeneId, dataset = "hsapiens_gene_ensembl") {
                                by.x="PROBE",by.y = "ensembl_gene_id")
 
   colnames(dic_tg)<-c("PROBE","ENSP")
+  dic_tg<-dic_tg[,c("ENSP","PROBE")]
 
   #the prefix 9606. will be needed later
   dic_tg$ENSP<-gsub("ENSP","9606.ENSP",
