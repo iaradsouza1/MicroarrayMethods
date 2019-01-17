@@ -28,9 +28,11 @@ set_fdata <- function(eset, fdata, probe_col, rm_probes = FALSE, ref_col = "hgnc
     rem_probes <- fdata %>%
       dplyr::group_by((!!id1)) %>%
       dplyr::summarise(c = dplyr::n_distinct((!!id2))) %>%
+      dplyr::ungroup() %>%
       dplyr::filter(c > 1) %>%
       dplyr::select((!!id1)) %>%
       unlist(use.names = F)
+
 
     # Subset fdata by probes that are not promiscuous
     probes_in <- fdata[,probe_col] %in% rem_probes
@@ -41,11 +43,16 @@ set_fdata <- function(eset, fdata, probe_col, rm_probes = FALSE, ref_col = "hgnc
     fdata <- fdata %>%
       dplyr::filter(!duplicated((!!id1)))
 
+    # Set probes as rownames
+    rownames(fdata) <- fdata[,probe_col]
+    fdata <- fdata[, !(colnames(fdata) %in% probe_col)]
+
     # Calculate proportion of promiscuous probes removed from feature data
-    prop <- round(sum(probes_in) / length(unique(fdata[,probe_col])) * 100, digits = 2)
+    prop <- round(sum(probes_in) / length(unique(rownames(fdata))) * 100, digits = 2)
 
     # Filter assayData by feature data and assign fData
-    eset <- eset[rownames(eset) %in% fdata[, probe_col], ]
+    eset <- eset[rownames(eset) %in% rownames(fdata), ]
+    eset <- eset[base::match(rownames(fdata), rownames(eset)), ]
     Biobase::fData(eset) <- fdata
     message(prop, "% of probes mapping to different ", ref_col, " were removed. Also, ", dup, " duplicated probes in feature data were removed.")
     return(eset)
@@ -57,8 +64,13 @@ set_fdata <- function(eset, fdata, probe_col, rm_probes = FALSE, ref_col = "hgnc
     fdata <- fdata %>%
       dplyr::filter(!duplicated((!!id1)))
 
+    # Set probes as rownames
+    rownames(fdata) <- fdata[,probe_col]
+    fdata <- fdata[, !(colnames(fdata) %in% probe_col)]
+
     # Filter assayData by feature data and assign fData
-    eset <- eset[rownames(eset) %in% fdata[, probe_col], ]
+    eset <- eset[rownames(eset) %in% rownames(fdata), ]
+    eset <- eset[base::match(rownames(fdata), rownames(eset)), ]
     Biobase::fData(eset) <- fdata
     message(dup, " duplicated probes in feature data were removed.")
     return(eset)

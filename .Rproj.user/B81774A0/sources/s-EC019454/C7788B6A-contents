@@ -47,3 +47,6 @@ contrasts <- limma::makeContrasts(a, levels = design)
 ct.fit <- limma::eBayes(limma::contrasts.fit(fit, contrasts))
 res.fit <- limma::decideTests(ct.fit, method = "separate", adjust.method = "BH", p.value = 0.05)
 limma::topTable(ct.fit, adjust.method = "BH", p.value = 0.05)
+
+
+
