@@ -15,7 +15,6 @@ ref_col <- "hgnc_symbol"
 contrasts <- c(s8xs0 = "shOTX2_8-shOTX2_0", s16xs8 = "shOTX2_16-shOTX2_8", s24xs16 = "shOTX2_24-shOTX2_16",
                s48xs24 = "shOTX2_48-shOTX2_24", s96xs48 = "shOTX2_96-shOTX2_48")
 
-feature_data[,platform] <- NULL
 # Quality control report
 create_report(celfiles = celfiles_path,
               pheno_data = pheno_data,
