@@ -3,6 +3,7 @@
 export(create_report)
 export(get_annotation)
 export(import_celfiles)
+export(import_norm)
 export(list_all_attributes)
 export(list_celfiles)
 export(list_datasets)

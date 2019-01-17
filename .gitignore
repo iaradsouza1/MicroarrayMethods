@@ -1,8 +1,6 @@
 **/figure
 .gitignore
-**.Rproj.user/
 *.RData
 *.Rbuildignore
 *.Rhistory
-*MicroarrayMethods.Rproj
 

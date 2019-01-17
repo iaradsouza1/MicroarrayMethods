@@ -1,0 +1,23 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1547735080975.000,
+    "dirty" : true,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "0",
+    "id" : "C7788B6A",
+    "lastKnownWriteTime" : 1547740881,
+    "last_content_update" : 1547744421493,
+    "path" : "~/Dropbox/Iara/Pipelines/Microarray_v2/Affymetrix/diff.r",
+    "project_path" : null,
+    "properties" : {
+        "cursorPosition" : "49,0",
+        "scrollLine" : "31",
+        "tempName" : "Untitled9"
+    },
+    "relative_order" : 6,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}

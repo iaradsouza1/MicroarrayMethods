@@ -1,0 +1,90 @@
+################################################
+########## DIFFERENTIAL EXPRESSION #############
+################################################
+
+library(limma)
+library(affy)
+#library(db da plataforma)
+library(biomaRt)
+library(genefilter)
+
+# Setwd
+setwd('~/')
+
+# Ler e transformar os arquivos .CEL em objetos AffyBatch
+raw <- ReadAffy()
+
+# Importar os dados das amostras
+samples <- read.table('samples.txt', stringsAsFactors = F, header = F, col.names = c('GSMid', "names"))
+sampleNames(raw) <- samples$names
+
+# Obter os valores de expressao
+eset <- rma(raw)
+my_exp <- exprs(eset)
+
+# Obter os nomes das sondas
+probes <- as.data.frame(rownames(my_exp))
+
+# Obter os ids correspondentes as sondas com o biomaRt
+ensembl <- useMart("ENSEMBL_MART_ENSEMBL",dataset="hsapiens_gene_ensembl")
+ids <- getBM(attributes = c("affy_hg_u133_plus_2", "ensembl_gene_id", "entrezgene", "hgnc_symbol"),
+             filters = 'affy_hg_u133_plus_2',
+             values = probes,
+             mart = ensembl)
+
+entrez <- ids$entrezgene
+symbol <- ids$hgnc_symbol
+
+# O mapeamento tambem pode ser feito pelo db da plataforma:
+# library(hgu133plus2.db)
+# x <- hgu133plus2ENTREZID
+# entrez <- unlist(as.list(x[rownames(my_exp)]))
+# x <- hgu133plus2SYMBOL
+# symbol <- unlist(as.list(x[rownames(my_exp)]))
+
+# Estabelecer os grupos
+targets <- as.factor(c(rep('control', 10), rep('diabetes', 10)))
+
+# Criar a matriz design
+design <- model.matrix(~ 0 + targets)
+colnames(design) <- c('control', 'diabetes')
+
+# Modelo linear
+fit <- lmFit(my_exp, design)
+
+# Criar listas com os ids correspondentes as probes
+fit$genes$entrez <- entrez
+fit$genes$symbol <- symbol
+
+# Estabelecer os contrastes
+# Neste momento, estabelecer as comparacoes entre os grupos 
+# a fim de obter os valores de expressao diferencial
+contrasts <- makeContrasts(diabetes-control, control-diabetes, levels=design)
+
+# Estatistica bayesiana
+ct.fit <- eBayes(contrasts.fit(fit, contrasts))
+res.fit <- decideTests(ct.fit, method="global", adjust.method="BH", p.value = 0.001)
+
+# Combinar os resultados do limma em um unico dataset
+SH.limma <- data.frame( entrez= ct.fit$genes$entrez, symbol = ct.fit$genes$symbol,
+                        logFC = ct.fit$coef, p.value = ct.fit$p.value, 
+                        degenes = unclass(res.fit), stringsAsFactors = FALSE)
+
+
+# Seleção dos genes diferencialmente expressos
+features <- rowSums(res.fit!=0) > 0
+features <- names(features)[features]
+
+# Filtrar e obter a tabela dos genes diferencialmente expressos
+DEexp <- my_exp[features, ]
+DElimma <- SH.limma[rownames(DEexp), ]
+DElimma <- DElimma[complete.cases(DElimma), ]
+save(DElimma, DEexp, SH.limma, features, file="Data/SH.limmaREF.RData")
+
+# Filtrar
+# filter <- nsFilter(eset, require.entrez = T, remove.dupEntrez = T, var.func = IQR,var.filter = T)
+# filter.eset <- filter$eset
+# my_exp <- exprs(filter.eset)
+
+
+

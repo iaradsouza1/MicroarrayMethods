@@ -1,0 +1,1 @@
+{"frames":[{"character_number":0,"end_character_number":0,"end_line_number":0,"file":"","func":"oligo::MAplot(eset, plot.method = \"smoothScatter\", main = \"\")","line_number":0}],"message":"Error in oligo::MAplot(eset, plot.method = \"smoothScatter\", main = \"\") : \n  objeto 'eset' não encontrado\n"}

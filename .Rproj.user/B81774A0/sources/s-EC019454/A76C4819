@@ -1,0 +1,23 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1547744774642.000,
+    "dirty" : false,
+    "encoding" : "",
+    "folds" : "",
+    "hash" : "0",
+    "id" : "A76C4819",
+    "lastKnownWriteTime" : 1547740881,
+    "last_content_update" : 1547744774642,
+    "path" : null,
+    "project_path" : null,
+    "properties" : {
+        "id" : "53b77908b44d425481757ded668cabad",
+        "name" : "eset",
+        "title" : "eset"
+    },
+    "relative_order" : 7,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "object_explorer"
+}

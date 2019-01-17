@@ -1,0 +1,99 @@
+---
+output: 
+  html_document:
+    theme: spacelab
+    highlight: tango
+    toc: true
+    toc_float: true
+params:
+  celfiles: ""
+  pheno_data: ""
+  sep: ""
+  filenames: NULL
+  components: 0
+  group: ""
+  batch: NULL
+  type: NULL
+  
+  
+---
+
+# Raw data assessment
+
+```{r import_celfiles, echo=FALSE, message=FALSE}
+raw <- import_celfiles(celfiles_path = params$celfiles, pheno_data = params$pheno_data, sep = params$sep, filenames = params$filenames)
+```
+## Plot densities
+
+```{r raw_densities, echo=FALSE, message=FALSE}
+limma::plotDensities(raw@assayData$exprs, legend = FALSE, main = "Raw data samples density plot")
+```
+
+## Boxplot
+
+``` {r, echo=FALSE, message=FALSE, fig.height=5, fig.width=10}
+boxplot(raw, las = 2, main = "")
+```
+
+## RNA degradation plot
+
+```{r, echo=FALSE}
+deg <- AffyRNAdeg(raw)
+plotAffyRNAdeg(deg)
+```
+
+# Normalized data
+
+## MA-plot from normalized data
+
+```{r eset, echo=FALSE, message=FALSE, warning=FALSE}
+eset <- affy::rma(raw)
+```
+
+```{r maplot, echo=FALSE, warning=FALSE, message=FALSE, fig.height=8, fig.width=8}
+par(mfrow = c(2, 2))
+oligo::MAplot(eset, plot.method = "smoothScatter", main = "")
+```
+
+## Density plot 
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+par(mfrow = c(1,1))
+limma::plotDensities(eset, legend = F, main = "Normalized samples density")
+```
+
+## Boxplot
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE, fig.height=5, fig.width=10}
+par(mfrow = c(1,1))
+boxplot(eset, las = 2, main = "", col = "white")
+
+```
+
+## PCA
+
+```{r pca, echo=FALSE, message=FALSE}
+plot_pca(eset, components = params$components, groups = params$group, batch = params$batch)
+```
+
+## PCs proportion
+
+```{r pca_prop, echo=FALSE, warning=FALSE, message=FALSE}
+pca_prop(eset)
+```
+
+## Dendrogram
+
+```{r dendrogram, echo=FALSE, warning=FALSE, message=FALSE}
+plot_dendrogram(eset, groups = params$group)
+```
+
+```{r}
+rm(eset, raw, deg)
+```
+
+
+
+
+
+
