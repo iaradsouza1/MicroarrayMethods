@@ -33,7 +33,6 @@ set_fdata <- function(eset, fdata, probe_col, rm_probes = FALSE, ref_col = "hgnc
       dplyr::select((!!id1)) %>%
       unlist(use.names = F)
 
-
     # Subset fdata by probes that are not promiscuous
     probes_in <- fdata[,probe_col] %in% rem_probes
     fdata <- fdata[!probes_in,]
