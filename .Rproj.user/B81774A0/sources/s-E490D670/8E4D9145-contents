@@ -1,0 +1,44 @@
+# Differential expression analysis ----------------------------------------
+if (!require(devtools)) {
+  install.packages("devtools")
+}
+devtools::install_github("iaradsouza1/MicroarrayMethods")
+library(MicroarrayMethods)
+
+# Define function arguments
+celfiles_path <- "~/Dropbox/Iara/exp1/"
+pheno_data <- "samples.txt"
+sep <- "\t"
+group <- "group"
+type <- NULL
+batch <- "batch"
+report_output <- "~/Dropbox/Iara/exp1/QC.html"
+dataset <- "hsapiens_gene_ensembl"
+platform <- "affy_hg_u133_plus_2"
+ref_col <- "hgnc_symbol"
+contrasts <- c(s8xs0 = "shOTX2_8-shOTX2_0", s16xs8 = "shOTX2_16-shOTX2_8", s24xs16 = "shOTX2_24-shOTX2_16",
+               s48xs24 = "shOTX2_48-shOTX2_24", s96xs48 = "shOTX2_96-shOTX2_48")
+
+# Quality control report
+create_report(celfiles = celfiles_path,
+              pheno_data = pheno_data,
+              sep = sep,
+              components = c(1,2),
+              group = group,
+              batch = batch, output_file = report_output)
+
+# Import and normalize
+eset <- import_norm(celfiles_path = celfiles_path, pheno_data = pheno_data, sep = sep)
+
+# Get probes annotation
+feature_data <- get_annotation(dataset = dataset, platform = platform)
+
+# Set annotation into eset and remove promiscuous probes and dual notations
+eset <- set_fdata(eset, feature_data,
+                  probe_col = platform,
+                  ref_col = ref_col,
+                  rm_probes = TRUE)
+
+# Differential expression
+delimma <- diff_exp(eset, contrasts, method = "global", adjust.method = "BH", p.value = 0.001, degenes_only = T)
+
