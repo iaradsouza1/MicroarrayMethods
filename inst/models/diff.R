@@ -1,4 +1,4 @@
-Differential expression analysis ----------------------------------------
+# Differential expression analysis ----------------------------------------
 library(MicroarrayMethods)
 
 # Define function arguments
