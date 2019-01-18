@@ -37,5 +37,5 @@ Create quality assessment report of Affymetrix CEL files
 \details{
 \code{pheno_data} is a table containing basic information about the experiment, such as GSMid and sample groups.
 It must have at least these two columns (GSMid and sample groups). For PCA plot, one could provide the type of each samples (control or treated)
-and the batches (replicates) of each sample.
+and the batches (replicates) of each sample on different columns.
 }

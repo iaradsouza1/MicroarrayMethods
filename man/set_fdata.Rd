@@ -8,15 +8,15 @@ set_fdata(eset, fdata, probe_col, rm_probes = FALSE,
   ref_col = "hgnc_symbol")
 }
 \arguments{
-\item{eset}{ExpressionSet object. Usually the result of normalization process}
+\item{eset}{ExpressionSet object. Usually the result of the normalization process}
 
-\item{fdata}{Feature data (dataframe) containing at least two columns: probe id and other id (gene symbol, for instance).}
+\item{fdata}{A dataframe. Feature data containing at least two columns: probe id and other id (gene symbol, for instance).}
 
-\item{probe_col}{Column name for probes in \code{fdata}}
+\item{probe_col}{Character vector of length 1. Column name for probes in \code{fdata}}
 
-\item{rm_probes}{Logical. Whether toremove promiscuous probes form feature data dataframe.}
+\item{rm_probes}{Logical. Whether to remove promiscuous probes form feature data dataframe.}
 
-\item{ref_col}{Column name of feature data with the reference id to look for promiscuous probes.}
+\item{ref_col}{Character vector of length 1. Column name of feature data with the reference id to look for promiscuous probes.}
 }
 \value{
 ExpressionSet object with filtered assayData slot.
@@ -24,4 +24,8 @@ ExpressionSet object with filtered assayData slot.
 \description{
 Set feature data into ExpressionSet object. Additionaly, it is possible to remove promiscuous probes that
 map to different ids.
+}
+\examples{
+
+
 }
