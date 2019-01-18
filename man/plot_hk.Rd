@@ -11,7 +11,7 @@ plot_hk(eset, id, actin, gapdh, filename = NULL, ...)
 
 \item{id}{Column name for the gene identifier used in eset object}
 
-\item{actin}{Acting gene id}
+\item{actin}{Actin gene id}
 
 \item{gapdh}{GAPDH gene id}
 }

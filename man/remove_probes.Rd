@@ -11,7 +11,7 @@ remove_probes(fdata, probe_col, ref_col = "hgnc_symbol")
 
 \item{probe_col}{Probe column name in fdata dataframe}
 
-\item{ref_col}{Column name of the reference id to be counted for each probe.}
+\item{ref_col}{Column name of reference id to be counted for each probe.}
 }
 \value{
 ExpressionSet object with filtered assayData slot for promiscous probes

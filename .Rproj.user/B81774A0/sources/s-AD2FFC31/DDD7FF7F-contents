@@ -36,5 +36,5 @@ eset <- set_fdata(eset, feature_data,
                   rm_probes = TRUE)
 
 # Differential expression
-delimma <- diff_exp(eset, contrasts, method = "global", adjust.method = "BH", p.value = 0.001, degenes_only = T)
+delimma <- diff_exp(eset, contrasts, method = "global", adjust.method = "BH", p.value = 0.001, degenes_only = F)
 

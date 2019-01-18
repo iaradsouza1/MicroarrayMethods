@@ -1,0 +1,29 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1547774819291.000,
+    "dirty" : false,
+    "encoding" : "",
+    "folds" : "",
+    "hash" : "0",
+    "id" : "86389674",
+    "lastKnownWriteTime" : 1547774460,
+    "last_content_update" : 1547774819291,
+    "path" : null,
+    "project_path" : null,
+    "properties" : {
+        "cacheKey" : "9D78E4",
+        "caption" : "delimma",
+        "contentUrl" : "grid_resource/gridviewer.html?env=&obj=delimma&cache_key=9D78E4",
+        "displayedObservations" : 36628,
+        "environment" : "",
+        "object" : "delimma",
+        "preview" : 0,
+        "totalObservations" : 36628,
+        "variables" : 17
+    },
+    "relative_order" : 3,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_dataframe"
+}

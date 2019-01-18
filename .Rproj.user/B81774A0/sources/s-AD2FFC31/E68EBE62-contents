@@ -11,7 +11,7 @@
 #'
 #' @examples
 plot_dendrogram <- function(eset, groups, method = "euclidean", filename=NULL, ...) {
-  data_exprs <- as.data.frame(na.omit(Biobase::exprs(eset)))
+  data_exprs <- as.data.frame(na.omit(exprs(eset)))
   tdata_exprs <- t(data_exprs)
   rownames(tdata_exprs) <- Biobase::pData(eset)[, groups]
   d <- dist(as.matrix(tdata_exprs), method = method)

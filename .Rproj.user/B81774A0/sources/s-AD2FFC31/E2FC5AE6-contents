@@ -7,7 +7,7 @@ pheno_data <- "samples.txt"
 sep <- "\t"
 group <- "group"
 type <- NULL
-batch <- "batch"
+batch <- NULL
 report_output <- "~/Área de Trabalho/QC12312.html"
 dataset <- "hsapiens_gene_ensembl"
 platform <- "affy_hg_u133_plus_2"

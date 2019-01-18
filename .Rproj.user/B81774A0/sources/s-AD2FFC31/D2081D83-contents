@@ -19,7 +19,7 @@ get_annotation <- function(dataset, platform, db = "main", att = c("hgnc_symbol"
   if (db == "main") {
     ensembl <- biomaRt::useDataset(dataset = dataset, mart = biomaRt::useMart("ENSEMBL_MART_ENSEMBL"))
     att <- c(platform, att)
-    id <- biomaRt::getBM(attributes = att, mart = ensembl)
+    id <- getBM(attributes = att, mart = ensembl)
 
     id[id == ""] <- NA
     id <- unique(na.omit(id))
@@ -27,7 +27,7 @@ get_annotation <- function(dataset, platform, db = "main", att = c("hgnc_symbol"
   } else if (db == "mouse") {
     ensembl <- biomaRt::useDataset(dataset = dataset, mart = biomaRt::useMart("ENSEMBL_MART_MOUSE"))
     att <- c(platform, att)
-    id <- biomaRt::getBM(attributes = att, mart = ensembl)
+    id <- getBM(attributes = att, mart = ensembl)
     id[id == ""] <- NA
     id <- unique(na.omit(id))
     return(id)
