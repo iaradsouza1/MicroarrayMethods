@@ -1,5 +1,7 @@
 #' Differential expression analysis
 #'
+#' Differential expression analysis based on limma methods.
+#'
 #' @param eset ExpressionSet object. Usually the result of the normalization process
 #' @param contrasts A vector containing contrasts in which differential expression will be done
 #' @param method Character string specifying how genes and contrasts are to be combined in the multiple testing scheme.

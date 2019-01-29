@@ -1,0 +1,17 @@
+.GlobalEnv
+package:MicroarrayMethods
+devtools_shims
+package:bindrcpp
+package:hgu133plus2cdf
+package:magrittr
+package:usethis
+package:devtools
+tools:rstudio
+package:stats
+package:graphics
+package:grDevices
+package:utils
+package:datasets
+package:methods
+Autoloads
+package:base

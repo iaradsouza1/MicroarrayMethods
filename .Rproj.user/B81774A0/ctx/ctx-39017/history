@@ -1,0 +1,512 @@
+# Get probes annotation
+feature_data <- get_annotation(dataset = dataset, platform = platform)
+# Set annotation into eset and remove promiscuous probes and dual notations
+eset <- set_fdata(eset, feature_data,
+probe_col = platform,
+ref_col = ref_col,
+rm_probes = TRUE)
+a <- pData(eset)
+View(a)
+a <- calc_var_groups(exp, as.factor(pData(eset)[,group]))
+View(a)
+compare_variances(a, b)
+devtools::document()
+library(MicroarrayMethods)
+# Quality control report
+create_report(celfiles = celfiles_path,
+pheno_data = pheno_data,
+sep = sep,
+components = c(1,2),
+group = group,
+batch = batch, output_file = report_output)
+library(MicroarrayMethods)
+# Quality control report
+create_report(celfiles = celfiles_path,
+pheno_data = pheno_data,
+sep = sep,
+components = c(1,2),
+group = group,
+batch = batch, output_file = report_output)
+library(MicroarrayMethods)
+a <- 1L
+b <- 2
+sum_two <- function(a, b) {
+if(!is.numeric(a) && is.numeric(b)) {
+stop("First argument is not a number")
+}
+else if (is.numeric(a) && !is.numeric(b)) {
+stop("Second argument is not a number")
+}
+else if(!is.numeric(a) && !is.numeric(b)) {
+stop("Both arguments are not numbers")
+}
+else if (is.integer(a) || is.integer(b)) {
+warning(paste("Coercing ", a,  " to numeric"))
+}
+else {
+a + b
+}
+}
+result <- tryCatch({
+sum_two(a, b)
+},
+error = function(e) {
+print(paste("My error: ", e))
+return("ALOKA")
+})
+b <- "a"
+sum_two <- function(a, b) {
+if(!is.numeric(a) && is.numeric(b)) {
+stop("First argument is not a number")
+}
+else if (is.numeric(a) && !is.numeric(b)) {
+stop("Second argument is not a number")
+}
+else if(!is.numeric(a) && !is.numeric(b)) {
+stop("Both arguments are not numbers")
+}
+else if (is.integer(a) || is.integer(b)) {
+warning(paste("Coercing ", a,  " to numeric"))
+}
+else {
+a + b
+}
+}
+result <- tryCatch({
+sum_two(a, b)
+},
+error = function(e) {
+print(paste("My error: ", e))
+return("ALOKA")
+})
+a <- "b"
+b <- "a"
+sum_two <- function(a, b) {
+if (!is.numeric(a) && is.numeric(b)) {
+stop("First argument is not a number")
+}
+else if (is.numeric(a) && !is.numeric(b)) {
+stop("Second argument is not a number")
+}
+else if(!is.numeric(a) && !is.numeric(b)) {
+stop("Both arguments are not numbers")
+}
+else if (is.integer(a) || is.integer(b)) {
+warning(paste("Coercing ", a,  " to numeric"))
+}
+else {
+a + b
+}
+}
+result <- tryCatch({
+sum_two(a, b)
+},
+error = function(e) {
+print(paste("My error: ", e))
+return("ALOKA")
+})
+print(paste("My result: ", result))
+print(paste("My result: ", result))
+result <- tryCatch({
+sum_two(a, b)
+},
+error = function(e) {
+print(paste("My error: ", e))
+return("ALOKA")
+})
+print(paste("My result: ", result))
+if (!require(devtools)) {
+install.packages("devtools")
+devtools::install_github("iaradsouza1/MicroarrayMethods")
+}
+library(MicroarrayMethods)
+# Define function arguments
+celfiles_path <- "~/Dropbox/Iara/exp1/"
+pheno_data <- "samples.txt"
+sep <- "\t"
+group <- "group"
+type <- NULL
+batch <- "batch"
+report_output <- "~/Dropbox/Iara/exp1/QC.html"
+dataset <- "hsapiens_gene_ensembl"
+platform <- "affy_hg_u133_plus_2"
+ref_col <- "hgnc_symbol"
+contrasts <- c(s8xs0 = "shOTX2_8-shOTX2_0", s16xs8 = "shOTX2_16-shOTX2_8", s24xs16 = "shOTX2_24-shOTX2_16",
+s48xs24 = "shOTX2_48-shOTX2_24", s96xs48 = "shOTX2_96-shOTX2_48")
+# Import and normalize
+eset <- import_norm(celfiles_path = celfiles_path, pheno_data = pheno_data, sep = sep)
+# Get probes annotation
+feature_data <- get_annotation(dataset = dataset, platform = platform)
+# Get probes annotation
+feature_data <- get_annotation(dataset = dataset, platform = platform)
+# Get probes annotation
+feature_data <- get_annotation(dataset = dataset, platform = platform)
+View(feature_data)
+# Set annotation into eset and remove promiscuous probes and dual notations
+eset <- set_fdata(eset, feature_data,
+probe_col = platform,
+ref_col = ref_col,
+rm_probes = TRUE)
+# Differential expression
+delimma <- diff_exp(eset, contrasts, method = "global", adjust.method = "BH", p.value = 0.001, degenes_only = T)
+View(delimma)
+a <- aggregate(delimma, by = list(delimma$hgnc_symbol), FUN = median)
+View(a)
+View(delimma)
+idx <- grep("[log]|[FC]", colnames(delimma))
+idx <- grep("[log]", colnames(delimma))
+idx <- grep("log|FC", colnames(delimma))
+idx <- grep("log|fc", colnames(delimma), ignore.case = T)
+delimma2 < delimma[,idx]
+delimma2 < delimma[,idx]
+delimma[,idx]
+a < delimma[,idx]
+a <- delimma[,idx]
+delimma2 <- delimma[,idx]
+View(delimma2)
+View(delimma)
+View(a)
+a <- aggregate(delimma, by = list(delimma$hgnc_symbol), FUN = function(x) {
+x
+})
+View(a)
+a <- aggregate(delimma, by = list(delimma$hgnc_symbol), FUN = median)
+View(a)
+View(delimma)
+View(delimma)
+median(c(0.055255943, 0.092139680))
+View(a)
+idx <- grep("log|fc", colnames(delimma), ignore.case = T)
+delimma2 <- delimma[,idx]
+View(delimma2)
+idx <- grep("log|fc", colnames(delimma), ignore.case = T)
+delimma2 <- delimma[,idx]
+View(delimma2)
+library(dplyr)
+a <- delimma %>%
+gather(key = contrast, value = logfc, grep("log|fc", colnames(delimma), ignore.case = T))
+library(tidyr)
+a <- delimma %>%
+gather(key = contrast, value = logfc, grep("log|fc", colnames(delimma), ignore.case = T))
+View(a)
+View(a)
+a <- delimma %>%
+gather(key = contrast, value = logfc, grep("log|fc", colnames(delimma), ignore.case = T)) %>%
+group_by(hgnc_symbol, contrast) %>%
+summarise(median(logfc))
+View(a)
+anyDuplicated()
+anyDuplicated(a)
+View(a)
+a <- delimma %>%
+gather(key = contrast, value = logfc, grep("log|fc", colnames(delimma), ignore.case = T)) %>%
+group_by(hgnc_symbol, contrast) %>%
+mutate(summary = median(logfc))
+View(a)
+a <- delimma %>%
+gather(key = contrast, value = logfc, grep("log|fc", colnames(delimma), ignore.case = T)) %>%
+group_by(hgnc_symbol, contrast) %>%
+mutate(summary = function(x) {median(logfc)})
+a <- delimma %>%
+gather(key = contrast, value = logfc, grep("log|fc", colnames(delimma), ignore.case = T)) %>%
+group_by(hgnc_symbol, contrast) %>%
+mutate(summary = function(x) {median(logfc)})
+a <- delimma %>%
+gather(key = contrast, value = logfc, grep("log|fc", colnames(delimma), ignore.case = T)) %>%
+group_by(hgnc_symbol, contrast) %>%
+mutate(function(x) {median(logfc)})
+a <- delimma %>%
+gather(key = contrast, value = logfc, grep("log|fc", colnames(delimma), ignore.case = T)) %>%
+group_by(hgnc_symbol, contrast) %>%
+mutate(summary = do.call(median))
+a <- delimma %>%
+gather(key = contrast, value = logfc, grep("log|fc", colnames(delimma), ignore.case = T)) %>%
+group_by(hgnc_symbol, contrast) %>%
+mutate(summary = do.call("median", args = "logfc"))
+a <- delimma %>%
+gather(key = contrast, value = logfc, grep("log|fc", colnames(delimma), ignore.case = T)) %>%
+group_by(hgnc_symbol, contrast) %>%
+mutate(summary = do.call("median", args = list("logfc")))
+View(a)
+a <- delimma %>%
+gather(key = contrast, value = logfc, grep("log|fc", colnames(delimma), ignore.case = T)) %>%
+group_by(hgnc_symbol, contrast) %>%
+mutate(summary = do.call("median", args = list(logfc)))
+View(a)
+func <- "median"
+a <- delimma %>%
+gather(key = contrast, value = logfc, grep("log|fc", colnames(delimma), ignore.case = T)) %>%
+group_by(hgnc_symbol, contrast) %>%
+mutate(summary = do.call(func, args = list(logfc)))
+View(a)
+func <- "mean"
+View(a)
+a <- delimma %>%
+gather(key = contrast, value = logfc, grep("log|fc", colnames(delimma), ignore.case = T)) %>%
+group_by(hgnc_symbol, contrast) %>%
+mutate(summary = max(abs(logfc)))
+View(a)
+func <- "mean"
+a <- delimma %>%
+gather(key = contrast, value = logfc, grep("log|fc", colnames(delimma), ignore.case = T)) %>%
+group_by(hgnc_symbol, contrast) %>%
+mutate(summary = do.call(func, args = list(logfc)))
+View(a)
+View(a)
+View(a)
+View(a)
+a <- delimma %>%
+gather(key = contrast, value = logfc, grep("log|fc", colnames(delimma), ignore.case = T)) %>%
+group_by(hgnc_symbol, contrast) %>%
+mutate(id = 1:nrow(), summary = do.call(func, args = list(logfc)))
+a <- delimma %>%
+gather(key = contrast, value = logfc, grep("log|fc", colnames(delimma), ignore.case = T)) %>%
+group_by(hgnc_symbol, contrast) %>%
+mutate(id = 1:n(), summary = do.call(func, args = list(logfc)))
+View(a)
+a <- delimma %>%
+gather(key = contrast, value = logfc, grep("log|fc", colnames(delimma), ignore.case = T)) %>%
+group_by(hgnc_symbol, contrast) %>%
+mutate(summary = do.call(func, args = list(logfc))) %>%
+ungroup() %>%
+mutate(id = 1:n())
+View(a)
+View(a)
+a <- delimma %>%
+gather(key = contrast, value = logfc, grep("log|fc", colnames(delimma), ignore.case = T)) %>%
+group_by(hgnc_symbol, contrast) %>%
+mutate(summary = do.call(func, args = list(logfc))) %>%
+ungroup() %>%
+mutate(id = 1:n()) %>%
+spread(contrast, logfc)
+View(a)
+a <- delimma %>%
+gather(key = contrast, value = logfc, grep("log|fc", colnames(delimma), ignore.case = T)) %>%
+group_by(hgnc_symbol, contrast) %>%
+mutate(summary = do.call(func, args = list(logfc))) %>%
+ungroup() %>%
+#mutate(id = 1:n()) %>%
+spread(contrast, logfc,)
+View(a)
+a1 <- unique(a)
+View(a1)
+View(a1)
+View(a)
+View(a)
+a1 <- a[, -13]
+a1 <- unique(a[, -13])
+View(a1)
+View(delimma)
+View(a)
+a <- delimma %>%
+gather(key = contrast, value = logfc, grep("log|fc", colnames(delimma), ignore.case = T)) %>%
+group_by(hgnc_symbol, contrast) %>%
+mutate(summary = do.call(func, args = list(logfc))) %>%
+ungroup() %>%
+#mutate(id = 1:n()) %>%
+spread(contrast, summary)
+View(a)
+View(a)
+1395*5
+View(delimma)
+a <- delimma %>%
+gather(key = contrast, value = logfc, grep("log|fc", colnames(delimma), ignore.case = T)) %>%
+group_by(hgnc_symbol, contrast) %>%
+mutate(summary = do.call(func, args = list(logfc))) %>%
+ungroup() %>%
+select(-logfc) %>%
+#mutate(id = 1:n()) %>%
+spread(contrast, summary)
+View(a)
+View(a)
+a <- delimma %>%
+gather(key = contrast, value = logfc, grep("log|fc", colnames(delimma), ignore.case = T)) %>%
+group_by(hgnc_symbol, contrast) %>%
+mutate(summary = max(abs(logfc))) %>%
+ungroup() %>%
+select(-logfc) %>%
+#mutate(id = 1:n()) %>%
+spread(contrast, summary)
+View(a)
+a <- delimma %>%
+gather(key = contrast, value = logfc, grep("log|fc", colnames(delimma), ignore.case = T)) %>%
+group_by(hgnc_symbol, contrast) %>%
+mutate(summary = do.call(func, args = list(logfc))) %>%
+ungroup() %>%
+select(-logfc) %>%
+#mutate(id = 1:n()) %>%
+spread(contrast, summary)
+View(a)
+View(a)
+a <- delimma %>%
+gather(key = contrast, value = logfc, grep("log|fc", colnames(delimma), ignore.case = T)) %>%
+group_by(hgnc_symbol, contrast) %>%
+mutate(summary = max(abs(logfc))) %>%
+ungroup() %>%
+select(-logfc) %>%
+#mutate(id = 1:n()) %>%
+spread(contrast, summary)
+View(a)
+a <- delimma %>%
+gather(key = contrast, value = logfc, grep("log|fc", colnames(delimma), ignore.case = T)) %>%
+group_by(hgnc_symbol, contrast) %>%
+mutate(summary = which(max(abs(logfc)))) %>%
+ungroup() %>%
+select(-logfc) %>%
+#mutate(id = 1:n()) %>%
+spread(contrast, summary)
+a <- delimma %>%
+gather(key = contrast, value = logfc, grep("log|fc", colnames(delimma), ignore.case = T)) %>%
+group_by(hgnc_symbol, contrast) %>%
+mutate(summary = which.max(abs(logfc)))) %>%
+ungroup() %>%
+select(-logfc) %>%
+#mutate(id = 1:n()) %>%
+spread(contrast, summary)
+a <- delimma %>%
+gather(key = contrast, value = logfc, grep("log|fc", colnames(delimma), ignore.case = T)) %>%
+group_by(hgnc_symbol, contrast) %>%
+slice(which.max(abs(logfc)))) %>%
+ungroup() %>%
+select(-logfc) %>%
+#mutate(id = 1:n()) %>%
+spread(contrast, summary)
+a <- delimma %>%
+gather(key = contrast, value = logfc, grep("log|fc", colnames(delimma), ignore.case = T)) %>%
+group_by(hgnc_symbol, contrast) %>%
+slice(which.max(abs(logfc))) %>%
+ungroup() %>%
+select(-logfc) %>%
+#mutate(id = 1:n()) %>%
+spread(contrast, summary)
+a <- delimma %>%
+gather(key = contrast, value = logfc, grep("log|fc", colnames(delimma), ignore.case = T)) %>%
+group_by(hgnc_symbol, contrast) %>%
+slice(which.max(abs(logfc))) %>%
+ungroup() %>%
+select(-logfc) %>%
+#mutate(id = 1:n()) %>%
+spread(contrast, summary)
+rlang::last_error()
+a <- delimma %>%
+gather(key = contrast, value = logfc, grep("log|fc", colnames(delimma), ignore.case = T)) %>%
+group_by(hgnc_symbol, contrast) %>%
+filter(which.max(abs(logfc))) %>%
+ungroup() %>%
+select(-logfc) %>%
+#mutate(id = 1:n()) %>%
+spread(contrast, summary)
+filter(max(abs(logfc)) %>%
+a <- delimma %>%
+gather(key = contrast, value = logfc, grep("log|fc", colnames(delimma), ignore.case = T)) %>%
+group_by(hgnc_symbol, contrast) %>%
+filter(max(abs(logfc))) %>%
+ungroup() %>%
+select(-logfc) %>%
+#mutate(id = 1:n()) %>%
+spread(contrast, summary)
+a <- delimma %>%
+gather(key = contrast, value = logfc, grep("log|fc", colnames(delimma), ignore.case = T)) %>%
+group_by(hgnc_symbol, contrast) %>%
+filter(max(abs(logfc))) %>%
+ungroup() %>%
+select(-logfc) %>%
+#mutate(id = 1:n()) %>%
+spread(contrast, summary)
+a <- delimma %>%
+gather(key = contrast, value = logfc, grep("log|fc", colnames(delimma), ignore.case = T)) %>%
+group_by(hgnc_symbol, contrast) %>%
+filter(which.max(abs(logfc))) %>%
+ungroup() %>%
+select(-logfc) %>%
+#mutate(id = 1:n()) %>%
+spread(contrast, summary)
+a <- delimma %>%
+gather(key = contrast, value = logfc, grep("log|fc", colnames(delimma), ignore.case = T)) %>%
+group_by(hgnc_symbol, contrast) %>%
+slice(which.max(abs(logfc))) %>%
+ungroup() %>%
+select(-logfc) %>%
+#mutate(id = 1:n()) %>%
+spread(contrast, summary)
+a <- delimma %>%
+gather(key = contrast, value = logfc, grep("log|fc", colnames(delimma), ignore.case = T)) %>%
+group_by(hgnc_symbol, contrast) %>%
+slice(which.max(abs(logfc))) %>%
+ungroup() %>%
+select(-logfc) %>%
+#mutate(id = 1:n()) %>%
+spread(contrast, summary)
+a <- delimma %>%
+gather(key = contrast, value = logfc, grep("log|fc", colnames(delimma), ignore.case = T)) %>%
+group_by(hgnc_symbol, contrast) %>%
+#slice(which.max(abs(logfc))) %>%
+ungroup() %>%
+select(-logfc) %>%
+#mutate(id = 1:n()) %>%
+spread(contrast, summary)
+View(a)
+View(a1)
+View(a)
+a <- delimma %>%
+gather(key = contrast, value = logfc, grep("log|fc", colnames(delimma), ignore.case = T)) %>%
+group_by(hgnc_symbol, contrast) %>%
+slice(which.max(abs(logfc)))) %>%
+ungroup() %>%
+select(-logfc) %>%
+#mutate(id = 1:n()) %>%
+spread(contrast, summary)
+which.max(abs(delimma$logFC.shOTX2_8.shOTX2_0))
+View(delimma)
+View(delimma[565,])
+which.max(abs(delimma$logFC.shOTX2_16.shOTX2_8))
+View(a)
+# Differential expression analysis ----------------------------------------
+if (!require(devtools)) {
+install.packages("devtools")
+devtools::install_github("iaradsouza1/MicroarrayMethods")
+}
+library(MicroarrayMethods)
+# Define function arguments
+celfiles_path <- "~/Dropbox/Iara/exp1/"
+pheno_data <- "samples.txt"
+sep <- "\t"
+group <- "group"
+type <- NULL
+batch <- "batch"
+report_output <- "~/Dropbox/Iara/exp1/QC.html"
+dataset <- "hsapiens_gene_ensembl"
+platform <- "affy_hg_u133_plus_2"
+ref_col <- "hgnc_symbol"
+contrasts <- c(s8xs0 = "shOTX2_8-shOTX2_0", s16xs8 = "shOTX2_16-shOTX2_8", s24xs16 = "shOTX2_24-shOTX2_16",
+s48xs24 = "shOTX2_48-shOTX2_24", s96xs48 = "shOTX2_96-shOTX2_48")
+# Quality control report
+create_report(celfiles = celfiles_path,
+pheno_data = pheno_data,
+sep = sep,
+components = c(1,2),
+group = group,
+batch = batch, output_file = report_output)
+# Import and normalize
+eset <- import_norm(celfiles_path = celfiles_path, pheno_data = pheno_data, sep = sep)
+# Get probes annotation
+feature_data <- get_annotation(dataset = dataset, platform = platform)
+View(feature_data)
+# Set annotation into eset and remove promiscuous probes and dual notations
+eset <- set_fdata(eset, feature_data,
+probe_col = platform,
+ref_col = ref_col,
+rm_probes = TRUE)
+# Differential expression
+delimma <- diff_exp(eset, contrasts, method = "global", adjust.method = "BH", p.value = 0.001, degenes_only = T)
+View(delimma)
+# Differential expression
+delimma <- diff_exp(eset, contrasts, method = "global", adjust.method = "BH", p.value = 0.05, degenes_only = T)
+View(delimma)
+# Differential expression
+delimma <- diff_exp(eset, contrasts, method = "global", adjust.method = "BH", p.value = 0.001, degenes_only = T)
+View(delimma)
+library(devtools)
+devtools::document()
+library(MicroarrayMethods)
+devtools::document()

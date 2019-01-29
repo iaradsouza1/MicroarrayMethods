@@ -28,5 +28,5 @@ See \code{?decideTests}}
 A dataframe
 }
 \description{
-Differential expression analysis
+Differential expression analysis based on limma methods.
 }
