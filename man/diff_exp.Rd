@@ -2,14 +2,31 @@
 % Please edit documentation in R/diff_exp.R
 \name{diff_exp}
 \alias{diff_exp}
-\title{Title}
+\title{Differential expression analysis}
 \usage{
 diff_exp(eset, contrasts, method, adjust.method, p.value = 0.05,
   degenes_only = FALSE, ...)
 }
 \arguments{
-\item{...}{}
+\item{eset}{ExpressionSet object. Usually the result of the normalization process}
+
+\item{contrasts}{A vector containing contrasts in which differential expression will be done}
+
+\item{method}{Character string specifying how genes and contrasts are to be combined in the multiple testing scheme.
+See \code{?decideTests}}
+
+\item{adjust.method}{Character string specifying p-value adjustment method. See \code{?decideTests}}
+
+\item{p.value}{numeric value between 0 and 1 giving the required family-wise error rate or false discovery rate.
+See \code{?decideTests}}
+
+\item{degenes_only}{Logical value to specify whether return a dataframe with only differentially expressed genes}
+
+\item{...}{Other parameters to be passed to \code{decideTests}}
+}
+\value{
+A dataframe
 }
 \description{
-Title
+Differential expression analysis
 }

@@ -1,9 +1,9 @@
-a <- 1L
-b <- 2
+a <- "b"
+b <- "a"
 
 sum_two <- function(a, b) {
   
-  if(!is.numeric(a) && is.numeric(b)) {
+  if (!is.numeric(a) && is.numeric(b)) {
     stop("First argument is not a number")
   }
   else if (is.numeric(a) && !is.numeric(b)) {

@@ -1,8 +1,8 @@
 # Differential expression analysis ----------------------------------------
 if (!require(devtools)) {
   install.packages("devtools")
+  devtools::install_github("iaradsouza1/MicroarrayMethods")
 }
-devtools::install_github("iaradsouza1/MicroarrayMethods")
 library(MicroarrayMethods)
 
 # Define function arguments
@@ -39,6 +39,6 @@ eset <- set_fdata(eset, feature_data,
                   ref_col = ref_col,
                   rm_probes = TRUE)
 
-# Differential expression
+# Differential expression inference
 delimma <- diff_exp(eset, contrasts, method = "global", adjust.method = "BH", p.value = 0.001, degenes_only = T)
 

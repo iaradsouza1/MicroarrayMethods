@@ -1,4 +1,0 @@
-exp <- exprs(eset)
-a <- calc_var_groups(exp, as.factor(pData(eset)[,group]))
-b <- calc_var_total(exp)
-compare_variances(a, b)

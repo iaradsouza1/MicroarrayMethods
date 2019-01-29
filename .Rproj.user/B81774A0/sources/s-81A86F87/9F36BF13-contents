@@ -1,0 +1,35 @@
+summarise_probes <- function(df, ref_col) {
+  if(!is.data.frame(df)) {
+    stop("Check if 'df' is a data.frame")
+  }
+  
+  
+  
+  
+}
+
+
+library(dplyr)
+library(tidyr)
+idx <- grep("log|fc", colnames(delimma), ignore.case = T)
+delimma2 <- delimma[,idx]
+func <- "mean"
+
+a <- delimma %>% 
+  gather(key = contrast, value = logfc, grep("log|fc", colnames(delimma), ignore.case = T)) %>% 
+  group_by(hgnc_symbol, contrast) %>% 
+  mutate(summary = do.call(func, args = list(logfc))) %>% 
+  ungroup() %>% 
+  select(-logfc) %>% 
+  #mutate(id = 1:n()) %>% 
+  spread(contrast, summary)
+  
+a <- delimma %>% 
+  gather(key = contrast, value = logfc, grep("log|fc", colnames(delimma), ignore.case = T)) %>% 
+  group_by(hgnc_symbol, contrast) %>% 
+  slice(which.max(abs(logfc)))) %>% 
+  ungroup() %>% 
+  select(-logfc) %>% 
+  #mutate(id = 1:n()) %>% 
+  spread(contrast, summary)
+
