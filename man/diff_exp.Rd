@@ -22,7 +22,7 @@ See \code{?decideTests}}
 
 \item{degenes_only}{Logical value to specify whether return a dataframe with only differentially expressed genes}
 
-\item{...}{Other parameters to be passed to \code{decideTests}}
+\item{...}{Other parameters to be passed to \code{decideTests}. See \code{?decideTests}}
 }
 \value{
 A dataframe

@@ -10,7 +10,7 @@
 #' @param p.value numeric value between 0 and 1 giving the required family-wise error rate or false discovery rate.
 #' See \code{?decideTests}
 #' @param degenes_only Logical value to specify whether return a dataframe with only differentially expressed genes
-#' @param ... Other parameters to be passed to \code{decideTests}
+#' @param ... Other parameters to be passed to \code{decideTests}. See \code{?decideTests}
 #'
 #' @return A dataframe
 #' @export
