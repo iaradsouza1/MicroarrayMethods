@@ -4,13 +4,12 @@
 \alias{get_annotation}
 \title{Get annotation}
 \usage{
-get_annotation(dataset, platform, db = "main", att = c("hgnc_symbol",
-  "entrezgene"))
+get_annotation(dataset, platform = "none", db = "main", att)
 }
 \arguments{
 \item{dataset}{ENSEMBL dataset name. A dataset name can be retrieved with list_datasets() function.}
 
-\item{platform}{Platform name in ENSEMBL. Usually one retrieved by list_platforms() function}
+\item{platform}{Platform name in ENSEMBL. Usually one retrieved by list_platforms() function. Use "none" if you aren't working with microarray. In that case the parameter "att" is mandatory.}
 
 \item{db}{One of the following ENSEMBL databases: "main" for ENSEMBL_MART_ENSEMBL database (the main database in ENSEMBL, provides information for the majority of species)
 and "mouse" for ENSEMBL_MART_MOUSE database (which provides specific information of mouse strains)}
